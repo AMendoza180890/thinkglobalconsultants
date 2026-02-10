@@ -1,0 +1,111 @@
+---
+import { Image } from "astro:assets";
+import logoImagen from "~/assets/images/logoMTS.png";
+import { menuMain } from "~/data/menus.js";
+
+const rmTrailingSlash = (path: string): string => {
+  return path.endsWith("/") && path.length > 1
+    ? path.slice(0, path.length - 1)
+    : path;
+};
+
+const pathname = rmTrailingSlash(Astro.url.pathname);
+---
+
+<header x-data="{ open: false }" @keydown.window.escape="open = false">
+  <div class="h-24  bg-white shadow-sm fixed top-0 inset-x-0 z-55">
+    <nav class="flex items-center justify-between" aria-label="Global">
+      <!-- LOGO -->
+      <a
+        href="/"
+        class="fixed top-6 left-6 z-60 -m-1.5 p-1.5 flex items-center"
+      >
+        <Image
+          src={logoImagen}
+          class="w-14 h-auto"
+          alt="Missionary Tech Support Logo"
+        />
+      </a>
+
+      <!-- Aqui se controla el menu del sitio -->
+      <button
+        class="lg:hidden fixed top-6 right-6 z-60 size-10 flex items-center justify-center"
+        @click="open = !open"
+        aria-label="Toggle menu"
+      >
+        <!-- Esto muestra el icono de tipo Hamburguesa -->
+        <svg
+          x-show="!open"
+          x-transition
+          class="absolute size-8 text-brand-green"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+        </svg>
+        <!-- Esto muestra el icono de tipo  X -->
+        <svg
+          x-show="open"
+          x-effect="document.body.classList.toggle('overflow-hidden', open)"
+          x-transition
+          class="absolute size-8 text-brand-red"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+
+      <!-- MENÚ DESKTOP -->
+      <div
+        class="hidden lg:flex absolute inset-x-0 top-0 h-24 items-center justify-center gap-x-12"
+      >
+        {
+          menuMain.map((item) => (
+            <a
+              href={item.url}
+              class={`transition font-semibold hover:text-brand-green ${
+                pathname === item.url ? "menu-item-active" : ""} ${item.highlighted ? "button button-green" : "text-gray-700"
+              }`} target = {item.highlighted ? `"_blank"` : ""}
+            >
+              {item.name}
+            </a>
+          ))
+        }
+      </div>
+    </nav>
+
+    <!-- MENÚ MOBILE -->
+    <div
+      x-show="open"
+      x-transition
+      x-cloak
+      class="lg:hidden fixed inset-0 z-50 bg-white px-8 py-6"
+    >
+      <div class="mt-20 space-y-6 text-center">
+        {
+          menuMain.map((item) => (
+            <a
+              href={item.url}
+              @click="open = false"
+              class={`block text-3xl font-semibold ${pathname === item.url ? "menu-item-active" : ""} ${item.highlighted ? "button button-green" : "text-gray-700"
+              }`} target = {item.highlighted ? `"_blank"` : ""}
+            >
+              {item.name}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</header>
