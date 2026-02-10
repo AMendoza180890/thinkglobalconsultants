@@ -3,6 +3,10 @@ import { Image } from "astro:assets";
 import logoImagen from "~/assets/logos/bulb.png";
 import { menuMain } from "~/data/menus.js";
 
+import { colorSite } from "~/data/config";
+
+const highlightedClass = `rounded-full bg-${colorSite.replace('#', '')} px-4 py-2.5 text-sm font-semibold text-white hover:bg-${colorSite.replace('#', '')}-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-${colorSite.replace('#', '')}`;
+
 const rmTrailingSlash = (path: string): string => {
   return path.endsWith("/") && path.length > 1
     ? path.slice(0, path.length - 1)
@@ -78,7 +82,7 @@ const pathname = rmTrailingSlash(Astro.url.pathname);
                 pathname === item.url ? "menu-item-active" : ""
               } ${
                 item.highlighted
-                  ? "rounded-full bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-orange-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
+                  ? "rounded-full bg-[#014650] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#014650] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#014650]"
                   : "text-gray-700"
               }`}
               target={item.highlighted ? `"_blank"` : ""}
@@ -105,7 +109,7 @@ const pathname = rmTrailingSlash(Astro.url.pathname);
               @click="open = false"
               class={`block text-3xl font-semibold ${pathname === item.url ? "menu-item-active" : ""} ${
                 item.highlighted
-                  ? "rounded-full bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                  ? "rounded-full bg-[#014650] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#014650] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#014650]"
                   : "text-gray-700"
               }`}
               target={item.highlighted ? `"_blank"` : ""}
