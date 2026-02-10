@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import logoImagen from "~/assets/images/logoMTS.png";
+import logoImagen from "~/assets/logos/bulb.png";
 import { menuMain } from "~/data/menus.js";
 
 const rmTrailingSlash = (path: string): string => {
@@ -13,7 +13,7 @@ const pathname = rmTrailingSlash(Astro.url.pathname);
 ---
 
 <header x-data="{ open: false }" @keydown.window.escape="open = false">
-  <div class="h-24  bg-white shadow-sm fixed top-0 inset-x-0 z-55">
+  <div class="h-24 bg-white shadow-sm fixed top-0 inset-x-0 z-55">
     <nav class="flex items-center justify-between" aria-label="Global">
       <!-- LOGO -->
       <a
@@ -75,8 +75,13 @@ const pathname = rmTrailingSlash(Astro.url.pathname);
             <a
               href={item.url}
               class={`transition font-semibold hover:text-brand-green ${
-                pathname === item.url ? "menu-item-active" : ""} ${item.highlighted ? "button button-green" : "text-gray-700"
-              }`} target = {item.highlighted ? `"_blank"` : ""}
+                pathname === item.url ? "menu-item-active" : ""
+              } ${
+                item.highlighted
+                  ? "rounded-full bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-orange-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
+                  : "text-gray-700"
+              }`}
+              target={item.highlighted ? `"_blank"` : ""}
             >
               {item.name}
             </a>
@@ -98,8 +103,12 @@ const pathname = rmTrailingSlash(Astro.url.pathname);
             <a
               href={item.url}
               @click="open = false"
-              class={`block text-3xl font-semibold ${pathname === item.url ? "menu-item-active" : ""} ${item.highlighted ? "button button-green" : "text-gray-700"
-              }`} target = {item.highlighted ? `"_blank"` : ""}
+              class={`block text-3xl font-semibold ${pathname === item.url ? "menu-item-active" : ""} ${
+                item.highlighted
+                  ? "rounded-full bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                  : "text-gray-700"
+              }`}
+              target={item.highlighted ? `"_blank"` : ""}
             >
               {item.name}
             </a>

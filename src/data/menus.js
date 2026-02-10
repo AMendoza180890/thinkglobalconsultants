@@ -10,13 +10,18 @@ export const menuMain = [
         highlighted: false,
     },
     {
-        name: "Host Info",
-        url: "/hostInfo",
+        name: "Our Services",
+        url: "/our-services",
         highlighted: false,
     },
     {
-        name: "Stories",
-        url: "/stories",
+        name: "Our Customers",
+        url: "/customers",
+        highlighted: false,
+    },
+    {
+        name: "Insights",
+        url: "/insights",
         highlighted: false,
     },
     {
@@ -25,13 +30,8 @@ export const menuMain = [
         highlighted: false,
     },
     {
-        name: "Ways to Support",
-        url: "/support",
-        highlighted: false,
-    },
-    {
-        name: "Donate",
-        url: "https://www.givesendgo.com/missionarytechsupport",
+        name: "Request Consultation",
+        url: "#",
         highlighted: true,
     },
 ];
