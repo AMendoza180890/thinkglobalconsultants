@@ -5,8 +5,6 @@ import { menuMain } from "~/data/menus.js";
 
 import { colorSite } from "~/data/config";
 
-const highlightedClass = `rounded-full bg-${colorSite.replace('#', '')} px-4 py-2.5 text-sm font-semibold text-white hover:bg-${colorSite.replace('#', '')}-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-${colorSite.replace('#', '')}`;
-
 const rmTrailingSlash = (path: string): string => {
   return path.endsWith("/") && path.length > 1
     ? path.slice(0, path.length - 1)
@@ -20,13 +18,13 @@ const pathname = rmTrailingSlash(Astro.url.pathname);
   <div class="fixed inset-x-0 top-0 z-50 h-24 bg-white shadow-sm">
     <nav class="flex items-center justify-between" aria-label="Global">
       <!-- LOGO -->
-      <a href="/" class="fixed left-6 top-6 z-[60] -m-1.5 flex items-center p-1.5">
+      <a href="/"  class="fixed left-6 top-6 z-60 -m-1.5 flex items-center p-1.5">
         <Image src={logoImagen} class="h-auto w-14" alt="Missionary Tech Support Logo" />
       </a>
 
       <!-- Toggle mobile -->
       <button
-        class="fixed right-6 top-6 z-[60] flex size-10 items-center justify-center lg:hidden"
+        class="fixed right-6 top-6 z-60 flex size-10 items-center justify-center lg:hidden"
         @click="open = !open"
         aria-label="Toggle menu"
       >
@@ -102,7 +100,7 @@ const pathname = rmTrailingSlash(Astro.url.pathname);
 
                     {/* Línea inferior */}
                     <span
-                      class={`pointer-events-none absolute left-0 -bottom-2 h-[2px] w-full origin-left bg-brand-green transition-transform duration-200 ${
+                      class={`pointer-events-none absolute left-0 -bottom-2 h-0.5 w-full origin-left bg-brand-green transition-transform duration-200 ${
                         isDropdownActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                       }`}
                     ></span>
