@@ -5,7 +5,6 @@ export const siteDomain = "thinkglobalconsultants.com";
 export const siteName = "Think Global Consultants";
 export const siteSlogan = "Supporting those most in need";
 export const themeColor = "#3C788C";
-export const colorSite = "#014650";
 export const firstTitle = "Think";
 export const secondTitle = "Global Consultants";
 

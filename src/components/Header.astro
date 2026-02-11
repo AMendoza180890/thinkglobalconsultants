@@ -3,7 +3,6 @@ import { Image } from "astro:assets";
 import logoImagen from "~/assets/logos/bulb.png";
 import { menuMain } from "~/data/menus.js";
 
-import { colorSite } from "~/data/config";
 
 const rmTrailingSlash = (path: string): string => {
   return path.endsWith("/") && path.length > 1
@@ -72,60 +71,69 @@ const pathname = rmTrailingSlash(Astro.url.pathname);
 
             if (isDropdown) {
               return (
-                <div class="group relative" key={item.name}>
-                  <button
-                    type="button"
-                    class={`relative inline-flex items-center gap-2 font-semibold transition ${
-                      isDropdownActive ? "text-brand-green" : "text-gray-700 hover:text-brand-green"
-                    }`}
-                    aria-haspopup="true"
+                <div class="relative" x-data="{ ddOpen: false }" key={item.name}>
+                <button
+                  type="button"
+                  class={`relative inline-flex items-center gap-2 font-semibold transition ${
+                    isDropdownActive ? "text-brand-green" : "text-gray-700 hover:text-brand-green"
+                  }`}
+                  aria-haspopup="true"
+                  :aria-expanded="ddOpen.toString()"
+                  @click="ddOpen = !ddOpen"
+                  @keydown.escape.stop="ddOpen = false"
+                  @click.outside="ddOpen = false"
+                >
+                  <span>{item.name}</span>
+
+                  {/* Flecha */}
+                  <svg
+                    class={`h-4 w-4 transition-transform duration-200 ${
+                      isDropdownActive ? "text-brand-green" : ""
+                    }
+                    :class="ddOpen ? 'rotate-180' : ''`}
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
                   >
-                    <span>{item.name}</span>
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 0 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
 
-                    {/* Flecha */}
-                    <svg
-                      class={`h-4 w-4 transition-transform duration-200 group-hover:rotate-180 ${
-                        isDropdownActive ? "text-brand-green" : ""
-                      }`}
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
+                  {/* Línea inferior */}
+                  <span
+                    class={`pointer-events-none absolute left-0 -bottom-2 h-0.5 w-full origin-left bg-brand-green transition-transform duration-200 
+                      ${isDropdownActive ? "scale-x-100" : "scale-x-0"} :class="ddOpen ? 'scale-x-100' : '' `}></span>
+                </button>
 
-                    {/* Línea inferior */}
-                    <span
-                      class={`pointer-events-none absolute left-0 -bottom-2 h-0.5 w-full origin-left bg-brand-green transition-transform duration-200 ${
-                        isDropdownActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-                      }`}
-                    ></span>
-                  </button>
+                <ul
+                  x-show="ddOpen"
+                  x-transition
+                  x-cloak
+                  class="absolute left-0 mt-3 w-64 rounded-xl border border-gray-200 bg-white p-2 shadow-sm"
+                >
+                  {item.items.map((sub) => {
+                    const subPath = normalize(sub.url);
+                    const subActive = currentPath === subPath || currentPath.startsWith(subPath + "/");
 
-                  <ul class="absolute left-0 mt-3 hidden w-64 rounded-xl border border-gray-200 bg-white p-2 shadow-sm group-hover:block">
-                    {item.items.map((sub) => {
-                      const subPath = normalize(sub.url);
-                      const subActive = currentPath === subPath || currentPath.startsWith(subPath + "/");
-
-                      return (
-                        <li key={sub.url}>
-                          <a
-                            href={sub.url}
-                            class={`block rounded-lg px-3 py-2 text-sm hover:bg-gray-50 ${
-                              subActive ? "font-semibold text-brand-green" : "text-gray-700"
-                            }`}
-                          >
-                            {sub.name}
-                          </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
+                    return (
+                      <li key={sub.url}>
+                        <a
+                          href={sub.url}
+                          class={`block rounded-lg px-3 py-2 text-sm hover:bg-gray-50 ${
+                            subActive ? "font-semibold text-brand-green" : "text-gray-700"
+                          }`}
+                          @click="ddOpen = false"
+                        >
+                          {sub.name}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
               );
             }
 
@@ -141,7 +149,6 @@ const pathname = rmTrailingSlash(Astro.url.pathname);
                     ? "rounded-full bg-[#014650] px-4 py-2.5 text-sm font-semibold text-white hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#014650]"
                     : "text-gray-700"
                 }`}
-                target={item.highlighted ? "_blank" : undefined}
                 rel={item.highlighted ? "noreferrer" : undefined}
               >
                 {item.name}
@@ -215,7 +222,6 @@ const pathname = rmTrailingSlash(Astro.url.pathname);
                     ? "mt-4 w-fit rounded-full bg-[#014650] px-6 py-3 text-base font-semibold text-white hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#014650]"
                     : "text-gray-700"
                 }`}
-                target={item.highlighted ? "_blank" : undefined}
                 rel={item.highlighted ? "noreferrer" : undefined}
               >
                 {item.name}

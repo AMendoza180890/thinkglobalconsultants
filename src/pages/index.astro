@@ -2,9 +2,8 @@
 import Layout from "~/layouts/Layout.astro";
 import Heading from "~/components/Heading.astro";
 import Routingsections from "~/components/Routingsections.astro";
-import Containertwocolumns from "~/components/Containertwocolumns.astro";
+import SimpleSection from "~/components/SimpleSection.astro";
 import Stepsection from "~/components/Stepsection.astro";
-
 import TestimonialsCarousel from "~/components/TestimonialCarrusel.astro";
 import ActionSection from "~/components/ActionSection.astro";
 
@@ -15,11 +14,9 @@ import ActionSection from "~/components/ActionSection.astro";
 <Layout>
   <Heading />
   <Routingsections />
-  <Containertwocolumns>
+  <SimpleSection>
     <Stepsection />
-  </Containertwocolumns>
-
+  </SimpleSection>
   <TestimonialsCarousel />
-  
   <ActionSection />
 </Layout>

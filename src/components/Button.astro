@@ -1,15 +1,11 @@
 ---
-
-import { colorSite } from "~/data/config";
-
+const {classColor} = Astro.props;
 ---
 
 <button
   type="button"
-  class="rounded-full px-4 py-2.5 text-sm font-semibold text-white
-         transition-opacity hover:opacity-80
-         focus-visible:outline focus-visible:outline-offset-2"
-  style={`--btn:${colorSite}; background-color: var(--btn); outline-color: var(--btn);`}
+  class={classColor ? classColor : `rounded-full px-4 py-2.5 text-sm font-semibold text-white
+         transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-offset-2 bg-[#014650]`}
 >
   <slot />
 </button>
